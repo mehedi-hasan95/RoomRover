@@ -30,6 +30,7 @@ import Link from "next/link";
 import { FormError } from "../form/form-error";
 import { FormSuccess } from "../form/form-success";
 import { ImageUpload } from "../custom/image-upload";
+import FileUpload from "../custom/file-upload";
 
 export const Settings = () => {
   const [error, setError] = useState<string | undefined>();
@@ -131,7 +132,7 @@ export const Settings = () => {
                 />
               </>
             )}
-            <FormField
+            {/* <FormField
               control={form.control}
               name="image"
               render={({ field }) => (
@@ -148,6 +149,25 @@ export const Settings = () => {
                   <FormMessage />
                 </FormItem>
               )}
+            /> */}
+            <FormField
+              control={form.control}
+              name="image"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Profile Image</FormLabel>
+                  <FormControl>
+                    <FileUpload
+                      // disabled={isPending}
+                      apiEndpoint="imageUploader"
+                      value={field.value ? [field.value] : []}
+                      onChange={(url) => field.onChange(url)}
+                      onRemove={() => field.onChange("")}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
             <FormError message={error} />
             <FormSuccess message={success} />
@@ -157,9 +177,6 @@ export const Settings = () => {
           </form>
         </Form>
       </CardContent>
-      <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter>
     </Card>
   );
 };
