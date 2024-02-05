@@ -132,7 +132,7 @@ export const Settings = () => {
                 />
               </>
             )}
-            {/* <FormField
+            <FormField
               control={form.control}
               name="image"
               render={({ field }) => (
@@ -149,8 +149,8 @@ export const Settings = () => {
                   <FormMessage />
                 </FormItem>
               )}
-            /> */}
-            <FormField
+            />
+            {/* <FormField
               control={form.control}
               name="image"
               render={({ field }) => (
@@ -168,7 +168,7 @@ export const Settings = () => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
             <FormError message={error} />
             <FormSuccess message={success} />
             <Button disabled={isPending} type="submit">
