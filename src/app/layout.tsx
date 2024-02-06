@@ -4,6 +4,9 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/provider/AuthProvider";
 import { Toaster } from "@/components/ui/sonner";
+import { NavMenu } from "@/components/custom/nav-menu";
+import { ThemeProvider } from "@/components/theme-provider";
+import Footer from "@/components/custom/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,14 +23,13 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <html lang="en">
-        <body
-          className={cn(
-            "flex justify-between items-center flex-col",
-            inter.className
-          )}
-        >
-          {children}
-          <Toaster position="top-center" richColors />
+        <body className={cn("flex justify-between flex-col", inter.className)}>
+          <ThemeProvider attribute="class" defaultTheme="system">
+            <NavMenu />
+            {children}
+            <Footer />
+            <Toaster position="top-center" richColors />
+          </ThemeProvider>
         </body>
       </html>
     </AuthProvider>

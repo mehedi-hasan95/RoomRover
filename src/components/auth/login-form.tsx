@@ -21,6 +21,7 @@ import { FormError } from "@/components/form/form-error";
 import { FormSuccess } from "@/components/form/form-success";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { Loader2 } from "lucide-react";
 
 export const LoginForm = () => {
   const searchParams = useSearchParams();
@@ -99,13 +100,19 @@ export const LoginForm = () => {
 
           <FormError message={error || SameAccountError} />
           <FormSuccess message={success} />
-          <Button
-            disabled={isPending}
-            type="submit"
-            className={cn("disabled:cursor-not-allowed")}
-          >
-            Login
-          </Button>
+          {isPending ? (
+            <Button
+              disabled
+              type="submit"
+              className={cn("disabled:cursor-not-allowed")}
+            >
+              Please wait <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+            </Button>
+          ) : (
+            <Button type="submit" className={cn("disabled:cursor-not-allowed")}>
+              Login
+            </Button>
+          )}
         </form>
       </Form>
     </CardWrapper>
