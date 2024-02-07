@@ -1,5 +1,9 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,6 +14,7 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import {
+  Form,
   FormControl,
   FormDescription,
   FormField,
@@ -22,33 +27,30 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ArrowUpDown, CheckIcon, ChevronsUpDown } from "lucide-react";
+import { CheckIcon, ChevronsUpDownIcon } from "lucide-react";
+import { useLocation } from "@/hooks/use-location";
+import { useEffect, useState } from "react";
 
-interface ComboboxFormProps {
+interface CountryComboboxFormProps {
   form: any;
-  data: any;
-  label: string;
-  name: string;
-  placeholder: string;
-  searchText?: string;
-  emptyText?: string;
 }
-export function ComboboxForm({
-  form,
-  data,
-  label,
-  name,
-  placeholder,
-  searchText,
-  emptyText,
-}: ComboboxFormProps) {
+
+export function CountryComboboxForm({ form }: CountryComboboxFormProps) {
+  const [countries, setCountries] = useState<any[]>([]);
+  const { getAllCountry } = useLocation();
+
+  useEffect(() => {
+    let countries = getAllCountry();
+    setCountries(countries);
+  }, [getAllCountry]);
+
   return (
     <FormField
       control={form.control}
-      name={name}
+      name="country"
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          <FormLabel>{label}</FormLabel>
+          <FormLabel>Country</FormLabel>
           <Popover>
             <PopoverTrigger asChild>
               <FormControl>
@@ -61,33 +63,31 @@ export function ComboboxForm({
                   )}
                 >
                   {field.value
-                    ? data.find((item: any) => item.value === field.value)
-                        ?.label
-                    : `${searchText}`}
-                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    ? countries.find((item) => item.isoCode === field.value)
+                        ?.name
+                    : "Select Country"}
+                  <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </FormControl>
             </PopoverTrigger>
             <PopoverContent className="w-full p-0">
               <Command>
-                <CommandInput placeholder={placeholder} className="h-9" />
-                <CommandEmpty>
-                  {emptyText ? `${emptyText}` : "Not found."}
-                </CommandEmpty>
+                <CommandInput placeholder="Search country..." className="h-9" />
+                <CommandEmpty>No country found.</CommandEmpty>
                 <CommandGroup>
-                  {data.map((item: any) => (
+                  {countries.map((item) => (
                     <CommandItem
-                      value={item.label}
-                      key={item.value}
+                      value={item.isoCode}
+                      key={item.isoCode}
                       onSelect={() => {
-                        form.setValue(`${name}`, item.value);
+                        form.setValue("country", item.isoCode);
                       }}
                     >
-                      {item.label}
+                      {item.name}
                       <CheckIcon
                         className={cn(
                           "ml-auto h-4 w-4",
-                          item.value === field.value
+                          item.isoCode === field.value
                             ? "opacity-100"
                             : "opacity-0"
                         )}
@@ -98,7 +98,6 @@ export function ComboboxForm({
               </Command>
             </PopoverContent>
           </Popover>
-          <FormMessage />
         </FormItem>
       )}
     />

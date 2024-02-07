@@ -41,7 +41,6 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
     let imageName = image.substring(image.lastIndexOf("/") + 1);
     imageName = imageName.slice(0, imageName.lastIndexOf("."));
     const imagePath = "RoomRover/" + imageName;
-    console.log(imagePath);
     onRemove(image);
     startTransition(() => {
       DeleteCloudinaryImagesAction(imagePath).then((data) => {

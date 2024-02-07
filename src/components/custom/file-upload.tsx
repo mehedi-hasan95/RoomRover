@@ -60,7 +60,7 @@ const FileUpload = ({
       <UploadDropzone
         endpoint={apiEndpoint}
         onClientUploadComplete={(res) => {
-          onChange(res?.[0].url);
+          onChange(res as any);
         }}
         onUploadError={(error) => {
           toast.error(`${error?.message}`);
