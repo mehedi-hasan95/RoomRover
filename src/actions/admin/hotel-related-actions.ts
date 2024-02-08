@@ -139,3 +139,22 @@ export const UpdateHotelAction = async (
     return { error: "Something went wrong" };
   }
 };
+
+export const DeleteHotelAction = async (id: string) => {
+  try {
+    const currentUser = await CurrentUser();
+    const userRole = await CurrentUserRole();
+    if (!currentUser && userRole !== "ADMIN") {
+      return { error: "Unauthorize user" };
+    }
+    await prismaDb.hotel.delete({
+      where: {
+        id,
+        userId: currentUser?.id,
+      },
+    });
+    return { success: "Hotel Delete Successfully" };
+  } catch (error) {
+    return { error: "Something went wrong" };
+  }
+};

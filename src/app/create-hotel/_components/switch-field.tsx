@@ -7,11 +7,17 @@ import {
 import { Switch } from "@/components/ui/switch";
 
 interface fieldSwitchSchema {
+  disabled?: boolean;
   form: any;
   name: string;
   label: string;
 }
-export const SwitchField = ({ form, name, label }: fieldSwitchSchema) => {
+export const SwitchField = ({
+  form,
+  name,
+  label,
+  disabled,
+}: fieldSwitchSchema) => {
   return (
     <FormField
       control={form.control}
@@ -22,7 +28,11 @@ export const SwitchField = ({ form, name, label }: fieldSwitchSchema) => {
             <FormLabel>{label}</FormLabel>
           </div>
           <FormControl>
-            <Switch checked={field.value} onCheckedChange={field.onChange} />
+            <Switch
+              disabled={disabled}
+              checked={field.value}
+              onCheckedChange={field.onChange}
+            />
           </FormControl>
         </FormItem>
       )}

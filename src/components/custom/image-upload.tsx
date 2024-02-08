@@ -63,6 +63,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
                 onClick={() => handleDelete(url)}
                 variant="destructive"
                 size="sm"
+                disabled={disabled}
               >
                 <Trash className="h-4 w-4" />
               </Button>

@@ -24,13 +24,15 @@ import { StateComboboxForm } from "./state-combobox";
 import { CityComboboxForm } from "./city-combobox";
 import {
   CreateHotelAction,
+  DeleteHotelAction,
   UpdateHotelAction,
 } from "@/actions/admin/hotel-related-actions";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, Trash, Trash2 } from "lucide-react";
 import { Hotel, HotelImage } from "@prisma/client";
 import { Separator } from "@/components/ui/separator";
+import { DeleteModal } from "@/components/custom/delete-modal";
 
 interface CreateHotelFormProps {
   initialData: (Hotel & { hotelImage: HotelImage[] }) | null;
@@ -38,13 +40,13 @@ interface CreateHotelFormProps {
 export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
   const id = initialData?.id;
   const router = useRouter();
-  const [error, setError] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
   const [state, setState] = useState<IState[]>([]);
   const [city, setCity] = useState<ICity[]>([]);
 
   const action = initialData ? "Update" : "Create";
   const afterActin = initialData ? "Updating..." : "Creating...";
+  const heading = initialData ? "Update hotel" : "Create Hotel";
 
   const {
     getAllCountry,
@@ -120,9 +122,40 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
           });
     });
   }
+
+  // Delete User
+  const handleDelete = (id: string) => {
+    startTransition(() => {
+      DeleteHotelAction(id).then((data) => {
+        if (data.success) {
+          toast.success(data?.success);
+          router.replace("/");
+        }
+        {
+          data?.error && toast.error(data?.error);
+        }
+      });
+    });
+  };
   return (
     <div>
       <Separator className="mb-5" />
+      <div className="flex justify-between items-center mx-auto container px-6">
+        <h2 className="text-xl font-bold">{heading}</h2>
+        {initialData && (
+          <DeleteModal
+            id={initialData.id}
+            title={initialData.title}
+            onDelete={handleDelete}
+          >
+            <Button variant={"destructive"}>
+              <Trash2 className="mr-2 h-4 w-4" />
+              Delete
+            </Button>
+          </DeleteModal>
+        )}
+      </div>
+      <Separator className="my-5" />
       <div className="mx-auto container px-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -133,7 +166,11 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
                 <FormItem>
                   <FormLabel>Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="title" {...field} />
+                    <Input
+                      disabled={isPending}
+                      placeholder="title"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -147,6 +184,7 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
                   <FormLabel>About Hotel</FormLabel>
                   <FormControl>
                     <Textarea
+                      disabled={isPending}
                       placeholder="Tell us a little bit about hotel"
                       className="resize-none"
                       {...field}
@@ -182,28 +220,47 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
             />
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
               <SwitchField
+                disabled={isPending}
                 form={form}
                 name={"workspace"}
                 label={"Has Workspace?"}
               />
-              <SwitchField form={form} name={"pool"} label={"Has Pool?"} />
               <SwitchField
+                disabled={isPending}
+                form={form}
+                name={"pool"}
+                label={"Has Pool?"}
+              />
+              <SwitchField
+                disabled={isPending}
                 form={form}
                 name={"petAllowed"}
                 label={"Has Pet Allowed?"}
               />
               <SwitchField
+                disabled={isPending}
                 form={form}
                 name={"resturent"}
                 label={"Has resturent?"}
               />
               <SwitchField
+                disabled={isPending}
                 form={form}
                 name={"parking"}
                 label={"Has parking?"}
               />
-              <SwitchField form={form} name={"cctv"} label={"Has cctv?"} />
-              <SwitchField form={form} name={"gym"} label={"Has gym?"} />
+              <SwitchField
+                disabled={isPending}
+                form={form}
+                name={"cctv"}
+                label={"Has cctv?"}
+              />
+              <SwitchField
+                disabled={isPending}
+                form={form}
+                name={"gym"}
+                label={"Has gym?"}
+              />
             </div>
 
             {/* Cloudinary  */}
@@ -215,6 +272,7 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
                   <FormLabel>Add Image</FormLabel>
                   <FormControl>
                     <ImageUpload
+                      disabled={isPending}
                       value={field.value.map((image) => image.url)}
                       // disabled={loading}
                       onChange={(url) =>
