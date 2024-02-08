@@ -7,7 +7,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -30,7 +29,6 @@ import Link from "next/link";
 import { FormError } from "../form/form-error";
 import { FormSuccess } from "../form/form-success";
 import { ImageUpload } from "../custom/image-upload";
-import FileUpload from "../custom/file-upload";
 
 export const Settings = () => {
   const [error, setError] = useState<string | undefined>();
@@ -150,25 +148,7 @@ export const Settings = () => {
                 </FormItem>
               )}
             />
-            {/* <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Profile Image</FormLabel>
-                  <FormControl>
-                    <FileUpload
-                      // disabled={isPending}
-                      apiEndpoint="imageUploader"
-                      value={field.value ? [field.value] : []}
-                      onChange={(url) => field.onChange(url)}
-                      onRemove={() => field.onChange("")}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
+
             <FormError message={error} />
             <FormSuccess message={success} />
             <Button disabled={isPending} type="submit">

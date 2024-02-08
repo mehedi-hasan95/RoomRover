@@ -5,7 +5,7 @@ export const CreateHotelSchema = z.object({
   desc: z.string().min(2),
   country: z.string().min(2),
   state: z.string().min(1),
-  city: z.string().min(1),
+  city: z.string().min(1).optional(),
   locationDesc: z.string().min(2),
   workspace: z.boolean().default(true).optional(),
   pool: z.boolean().default(true).optional(),

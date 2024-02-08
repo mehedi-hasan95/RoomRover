@@ -1,9 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,13 +10,10 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import {
-  Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import {
   Popover,
@@ -28,33 +21,25 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { CheckIcon, ChevronsUpDownIcon } from "lucide-react";
-import { useLocation } from "@/hooks/use-location";
-import { useEffect, useState } from "react";
 
-interface CountryComboboxFormProps {
+interface StateComboboxFormProps {
   form: any;
+  data: any;
 }
 
-export function CountryComboboxForm({ form }: CountryComboboxFormProps) {
-  const [countries, setCountries] = useState<any[]>([]);
-  const { getAllCountry } = useLocation();
-
-  useEffect(() => {
-    let countries = getAllCountry();
-    setCountries(countries);
-  }, [getAllCountry]);
-
+export function StateComboboxForm({ form, data }: StateComboboxFormProps) {
   return (
     <FormField
       control={form.control}
-      name="country"
+      name="state"
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          <FormLabel>Country</FormLabel>
+          <FormLabel>State</FormLabel>
           <Popover>
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
+                  // disabled={data?.length < 1}
                   variant="outline"
                   role="combobox"
                   className={cn(
@@ -63,24 +48,24 @@ export function CountryComboboxForm({ form }: CountryComboboxFormProps) {
                   )}
                 >
                   {field.value
-                    ? countries.find((item) => item.isoCode === field.value)
+                    ? data.find((item: any) => item.isoCode === field.value)
                         ?.name
-                    : "Select Country"}
+                    : "Select State"}
                   <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </FormControl>
             </PopoverTrigger>
             <PopoverContent className="w-full p-0">
               <Command>
-                <CommandInput placeholder="Search country..." className="h-9" />
-                <CommandEmpty>No country found.</CommandEmpty>
+                <CommandInput placeholder="Search state..." className="h-9" />
+                <CommandEmpty>No state found.</CommandEmpty>
                 <CommandGroup>
-                  {countries.map((item) => (
+                  {data?.map((item: any) => (
                     <CommandItem
-                      value={item.isoCode}
+                      value={item.name}
                       key={item.isoCode}
                       onSelect={() => {
-                        form.setValue("country", item.isoCode);
+                        form.setValue("state", item.isoCode);
                       }}
                     >
                       {item.name}

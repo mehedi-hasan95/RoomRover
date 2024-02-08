@@ -25,8 +25,10 @@ export default function RootLayout({
       <html lang="en">
         <body className={cn("flex justify-between flex-col", inter.className)}>
           <ThemeProvider attribute="class" defaultTheme="system">
-            <NavMenu />
-            {children}
+            <div>
+              <NavMenu />
+              {children}
+            </div>
             <Footer />
             <Toaster position="top-center" richColors />
           </ThemeProvider>

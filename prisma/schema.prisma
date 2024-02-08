@@ -75,7 +75,7 @@ model Hotel {
   desc         String       @db.Text
   country      String
   state        String
-  city         String
+  city         String?
   locationDesc String       @db.Text
   workspace    Boolean      @default(true)
   pool         Boolean      @default(true)
