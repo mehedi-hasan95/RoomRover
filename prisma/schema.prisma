@@ -77,13 +77,13 @@ model Hotel {
   state        String
   city         String?
   locationDesc String       @db.Text
-  workspace    Boolean      @default(true)
-  pool         Boolean      @default(true)
+  workspace    Boolean      @default(false)
+  pool         Boolean      @default(false)
   petAllowed   Boolean      @default(false)
-  resturent    Boolean      @default(true)
-  parking      Boolean      @default(true)
-  cctv         Boolean      @default(true)
-  gym          Boolean      @default(true)
+  resturent    Boolean      @default(false)
+  parking      Boolean      @default(false)
+  cctv         Boolean      @default(false)
+  gym          Boolean      @default(false)
   userId       String
   user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt    DateTime     @default(now())
@@ -108,23 +108,25 @@ model HotelImage {
 }
 
 model Room {
-  id          String      @id @default(uuid())
-  title       String      @db.Text
-  price       Int         @default(0)
-  breckfast   Boolean     @default(false)
-  wifi        Boolean     @default(true)
-  tv          Boolean     @default(true)
-  roomService Boolean     @default(true)
-  kitchen     Boolean     @default(false)
-  washer      Boolean     @default(false)
-  kingBed     Int         @default(0)
-  queenBed    Int         @default(0)
-  hotelId     String
-  hotel       Hotel       @relation(fields: [hotelId], references: [id], onDelete: Cascade)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  roomImage   RoomImage[]
-  booking     Booking[]
+  id             String      @id @default(uuid())
+  title          String      @db.Text
+  desc           String      @db.Text
+  price          Int         @default(0)
+  breckfast      Boolean     @default(false)
+  breckfastPrice Int         @default(0)
+  wifi           Boolean     @default(false)
+  tv             Boolean     @default(false)
+  roomService    Boolean     @default(false)
+  kitchen        Boolean     @default(false)
+  washer         Boolean     @default(false)
+  kingBed        Int         @default(0)
+  queenBed       Int         @default(0)
+  hotelId        String
+  hotel          Hotel       @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  roomImage      RoomImage[]
+  booking        Booking[]
 
   @@index([hotelId])
 }

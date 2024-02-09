@@ -39,7 +39,7 @@ export function StateComboboxForm({ form, data }: StateComboboxFormProps) {
             <PopoverTrigger asChild>
               <FormControl>
                 <Button
-                  // disabled={data?.length < 1}
+                  disabled={data?.length < 1}
                   variant="outline"
                   role="combobox"
                   className={cn(

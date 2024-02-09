@@ -29,7 +29,7 @@ import {
 } from "@/actions/admin/hotel-related-actions";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Loader2, Trash, Trash2 } from "lucide-react";
+import { Home, Loader2, Trash, Trash2 } from "lucide-react";
 import { Hotel, HotelImage } from "@prisma/client";
 import { Separator } from "@/components/ui/separator";
 import { DeleteModal } from "@/components/custom/delete-modal";
@@ -48,13 +48,7 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
   const afterActin = initialData ? "Updating..." : "Creating...";
   const heading = initialData ? "Update hotel" : "Create Hotel";
 
-  const {
-    getAllCountry,
-    getCountryByCode,
-    getStateByCode,
-    getCountryState,
-    getCountryCity,
-  } = useLocation();
+  const { getCountryState, getCountryCity } = useLocation();
   // 1. Define your form.
   const form = useForm<z.infer<typeof CreateHotelSchema>>({
     resolver: zodResolver(CreateHotelSchema),
@@ -65,13 +59,13 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
       state: initialData?.state || "",
       city: initialData?.city || undefined,
       locationDesc: initialData?.locationDesc || "",
-      workspace: initialData?.workspace || true,
-      pool: initialData?.pool || true,
-      petAllowed: initialData?.petAllowed || false,
-      resturent: initialData?.resturent || true,
-      parking: initialData?.parking || true,
-      cctv: initialData?.cctv || true,
-      gym: initialData?.gym || false,
+      workspace: initialData?.workspace || undefined,
+      pool: initialData?.pool || undefined,
+      petAllowed: initialData?.petAllowed || undefined,
+      resturent: initialData?.resturent || undefined,
+      parking: initialData?.parking || undefined,
+      cctv: initialData?.cctv || undefined,
+      gym: initialData?.gym || undefined,
       hotelImage: initialData?.hotelImage || [],
     },
   });
@@ -301,6 +295,7 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
           </form>
         </Form>
       </div>
+      <Separator className="my-5" />
     </div>
   );
 };

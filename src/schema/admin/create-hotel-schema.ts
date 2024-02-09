@@ -16,3 +16,17 @@ export const CreateHotelSchema = z.object({
   gym: z.boolean().optional(),
   hotelImage: z.object({ url: z.string() }).array(),
 });
+
+export const CreatHotelRoomSchema = z.object({
+  title: z.string().min(2),
+  price: z.coerce.number(),
+  breckfast: z.boolean().optional(),
+  breckfastPrice: z.coerce.number(),
+  wifi: z.boolean().optional(),
+  tv: z.boolean().optional(),
+  roomService: z.boolean().optional(),
+  kitchen: z.boolean().optional(),
+  washer: z.boolean().optional(),
+  kingBed: z.coerce.number(),
+  queenBed: z.coerce.number(),
+});

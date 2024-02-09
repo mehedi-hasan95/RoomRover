@@ -1,5 +1,5 @@
 "use client";
-import { LogOut, Settings, User, User2 } from "lucide-react";
+import { Hotel, LogOut, Settings, User, User2 } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -41,6 +41,14 @@ export const UserInfo = () => {
               <span>Settings</span>
             </DropdownMenuItem>
           </Link>
+          {currentUser?.role === "ADMIN" && (
+            <Link href="/create-hotel">
+              <DropdownMenuItem className="cursor-pointer">
+                <Hotel className="mr-2 h-4 w-4" />
+                <span>Create Hotel</span>
+              </DropdownMenuItem>
+            </Link>
+          )}
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={() => signOut()}

@@ -1,16 +1,15 @@
-import { Header } from "@/components/auth/header";
-import { LoginButton } from "@/components/auth/login-button";
-import { Button } from "@/components/ui/button";
+import { HotelCard } from "@/components/common/hotel-card";
+import { prismaDb } from "@/lib/prismaDb";
 
-export default function Home() {
+export default async function Home() {
+  const data = await prismaDb.hotel.findMany({
+    include: {
+      hotelImage: true,
+    },
+  });
   return (
-    <main className="commonCss">
-      <div className="space-y-6 text-center flex flex-col">
-        <Header title="Wellcome to my demo" label="What are you want for?" />
-        <LoginButton mode="modal" asChild>
-          <Button>Login</Button>
-        </LoginButton>
-      </div>
+    <main className="container mx-auto px-6">
+      <HotelCard data={data} />
     </main>
   );
 }

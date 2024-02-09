@@ -75,7 +75,7 @@ export const HotelCell: React.FC<HotelCellProps> = ({ data }) => {
             href={`/create-hotel/${data.id}`}
             className="flex items-center gap-x-1 cursor-pointer"
           >
-            <Edit3 className="h-4 w-4" /> View Hotel
+            <Edit3 className="h-4 w-4" /> Edit Hotel
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem
