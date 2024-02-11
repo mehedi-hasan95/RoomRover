@@ -158,3 +158,22 @@ export const DeleteHotelAction = async (id: string) => {
     return { error: "Something went wrong" };
   }
 };
+
+export const GetUniqueHotelAction = async (id: string) => {
+  try {
+    const currentUser = await CurrentUser();
+    const userRole = await CurrentUserRole();
+    if (!currentUser && userRole !== "ADMIN") {
+      return { error: "Unauthorize user" };
+    }
+    const data = await prismaDb.hotel.findUnique({
+      where: {
+        id: id,
+        userId: currentUser?.id,
+      },
+    });
+    return { success: "Hotel found", data };
+  } catch (error) {
+    return { error: "Something went wrong" };
+  }
+};

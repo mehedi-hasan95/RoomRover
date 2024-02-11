@@ -19,6 +19,7 @@ export const CreateHotelSchema = z.object({
 
 export const CreatHotelRoomSchema = z.object({
   title: z.string().min(2),
+  desc: z.string(),
   price: z.coerce.number(),
   breckfast: z.boolean().optional(),
   breckfastPrice: z.coerce.number(),
@@ -29,4 +30,5 @@ export const CreatHotelRoomSchema = z.object({
   washer: z.boolean().optional(),
   kingBed: z.coerce.number(),
   queenBed: z.coerce.number(),
+  roomImage: z.object({ url: z.string() }).array(),
 });

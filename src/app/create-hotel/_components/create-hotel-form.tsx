@@ -29,10 +29,11 @@ import {
 } from "@/actions/admin/hotel-related-actions";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Home, Loader2, Trash, Trash2 } from "lucide-react";
+import { HomeIcon, Loader2, Trash2 } from "lucide-react";
 import { Hotel, HotelImage } from "@prisma/client";
 import { Separator } from "@/components/ui/separator";
 import { DeleteModal } from "@/components/custom/delete-modal";
+import Link from "next/link";
 
 interface CreateHotelFormProps {
   initialData: (Hotel & { hotelImage: HotelImage[] }) | null;
@@ -294,6 +295,14 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
             )}
           </form>
         </Form>
+      </div>
+      <Separator className="my-5" />
+      <div className="container mx-auto px-6 flex justify-end items-center">
+        <Link href={`/create-hotel/room/${id}`}>
+          <Button>
+            <HomeIcon className="mr-2 h-4 w-4" /> Create/Update Room
+          </Button>
+        </Link>
       </div>
       <Separator className="my-5" />
     </div>
