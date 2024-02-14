@@ -3,6 +3,7 @@
 import { CurrentUser, CurrentUserRole } from "@/lib/current-user";
 import { prismaDb } from "@/lib/prismaDb";
 import { CreateHotelSchema } from "@/schema/admin/create-hotel-schema";
+import { revalidatePath } from "next/cache";
 import * as z from "zod";
 
 export const CreateHotelAction = async (
@@ -21,6 +22,7 @@ export const CreateHotelAction = async (
     const {
       title,
       desc,
+      shortDesc,
       country,
       state,
       city,
@@ -39,6 +41,7 @@ export const CreateHotelAction = async (
       data: {
         title,
         desc,
+        shortDesc,
         country,
         state,
         city,
@@ -58,6 +61,8 @@ export const CreateHotelAction = async (
         },
       },
     });
+    revalidatePath("/");
+    revalidatePath("/create-hotel");
     return { success: "Hotel Created successfully", data };
   } catch (error) {
     return { error: "Something went wrong" };
@@ -82,6 +87,7 @@ export const UpdateHotelAction = async (
     const {
       title,
       desc,
+      shortDesc,
       country,
       state,
       city,
@@ -115,6 +121,7 @@ export const UpdateHotelAction = async (
       data: {
         title,
         desc,
+        shortDesc,
         country,
         state,
         city,
@@ -134,6 +141,8 @@ export const UpdateHotelAction = async (
         },
       },
     });
+    revalidatePath("/");
+    revalidatePath("/create-hotel");
     return { success: "Hotel update successfully", data };
   } catch (error) {
     return { error: "Something went wrong" };
@@ -153,6 +162,8 @@ export const DeleteHotelAction = async (id: string) => {
         userId: currentUser?.id,
       },
     });
+    revalidatePath("/");
+    revalidatePath("/create-hotel");
     return { success: "Hotel Delete Successfully" };
   } catch (error) {
     return { error: "Something went wrong" };

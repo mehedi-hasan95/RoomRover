@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { NavMenu } from "@/components/custom/nav-menu";
 import { ThemeProvider } from "@/components/theme-provider";
 import Footer from "@/components/custom/footer";
+import { Separator } from "@/components/ui/separator";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="system">
             <div>
               <NavMenu />
+              <Separator className="mb-5" />
               {children}
             </div>
             <Footer />

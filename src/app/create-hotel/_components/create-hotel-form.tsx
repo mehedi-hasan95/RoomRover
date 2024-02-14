@@ -30,15 +30,16 @@ import {
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { HomeIcon, Loader2, Trash2 } from "lucide-react";
-import { Hotel, HotelImage } from "@prisma/client";
+import { Hotel, HotelImage, Room } from "@prisma/client";
 import { Separator } from "@/components/ui/separator";
 import { DeleteModal } from "@/components/custom/delete-modal";
 import Link from "next/link";
 
 interface CreateHotelFormProps {
-  initialData: (Hotel & { hotelImage: HotelImage[] }) | null;
+  initialData: (Hotel & { hotelImage: HotelImage[]; room: Room[] }) | null;
 }
 export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
+  console.log(initialData);
   const id = initialData?.id;
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -56,6 +57,7 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
     defaultValues: {
       title: initialData?.title || "",
       desc: initialData?.desc || "",
+      shortDesc: initialData?.shortDesc || "",
       country: initialData?.country || "",
       state: initialData?.state || "",
       city: initialData?.city || undefined,
@@ -189,6 +191,24 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="shortDesc"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Short Desc</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      disabled={isPending}
+                      placeholder="Tell us a little bit about hotel"
+                      className="resize-none"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
               <CountryComboboxForm form={form} />
               <StateComboboxForm form={form} data={state} />
@@ -297,13 +317,31 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
         </Form>
       </div>
       <Separator className="my-5" />
-      <div className="container mx-auto px-6 flex justify-end items-center">
-        <Link href={`/create-hotel/room/${id}`}>
-          <Button>
-            <HomeIcon className="mr-2 h-4 w-4" /> Create/Update Room
-          </Button>
-        </Link>
-      </div>
+      {initialData && (
+        <div className="container mx-auto px-6">
+          <div className="flex justify-end items-center">
+            <Link href={`/create-hotel/room/${id}`}>
+              <Button>
+                <HomeIcon className="mr-2 h-4 w-4" /> Create/Update Room
+              </Button>
+            </Link>
+          </div>
+          <Separator className="my-5" />
+          <h2 className="text-xl font-bold mb-4">
+            This hotel has ({initialData?.room?.length}) Room
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {initialData?.room.map((item) => (
+              <div key={item.id} className="border rounded-md p-4">
+                <Link href="#">
+                  <h2 className="text-xl font-bold">{item.title}</h2>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <Separator className="my-5" />
     </div>
   );

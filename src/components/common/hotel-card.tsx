@@ -9,6 +9,7 @@ import {
 import { ImageCarousel } from "./image-carousel";
 import { Hotel, HotelImage } from "@prisma/client";
 import { useLocation } from "@/hooks/use-location";
+import Link from "next/link";
 
 interface HotelCardProps {
   data: Array<Hotel & { hotelImage: HotelImage[] }>;
@@ -21,8 +22,10 @@ export const HotelCard: React.FC<HotelCardProps> = ({ data }) => {
       {data?.map((item) => (
         <Card key={item.id} className="group">
           <CardHeader>
-            <ImageCarousel data={item as any} />
-            <CardTitle>{item.title}</CardTitle>
+            <ImageCarousel data={item.hotelImage} />
+            <CardTitle>
+              <Link href={`/hotel/${item.id}`}>{item.title}</Link>
+            </CardTitle>
             <CardDescription>
               Location: {getStateByCode(item.country, item.state)?.name},{" "}
               {getCountryByCode(item.country)?.name}

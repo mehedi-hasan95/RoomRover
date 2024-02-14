@@ -11,8 +11,10 @@ const CreateHotel = async ({ params }: { params: { hotelId: string } }) => {
     },
     include: {
       hotelImage: true,
+      room: true,
     },
   });
+  console.log(data);
   return (
     <div>
       <CreateHotelForm initialData={data} />

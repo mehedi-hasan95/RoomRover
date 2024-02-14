@@ -3,6 +3,7 @@ import { z } from "zod";
 export const CreateHotelSchema = z.object({
   title: z.string().min(2),
   desc: z.string().min(2),
+  shortDesc: z.string().min(2),
   country: z.string().min(2),
   state: z.string().min(1),
   city: z.string().min(1).optional(),
@@ -22,7 +23,7 @@ export const CreatHotelRoomSchema = z.object({
   desc: z.string(),
   price: z.coerce.number(),
   breckfast: z.boolean().optional(),
-  breckfastPrice: z.coerce.number(),
+  breckfastPrice: z.coerce.number().optional(),
   wifi: z.boolean().optional(),
   tv: z.boolean().optional(),
   roomService: z.boolean().optional(),

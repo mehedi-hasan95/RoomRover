@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,9 +17,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { SwitchField } from "./switch-field";
 import { useTransition } from "react";
 import { ImageUpload } from "@/components/custom/image-upload";
+import { CreateHotelRoomAction } from "@/actions/admin/hotel-room-actions";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-export const HotelRoomForm = () => {
+interface HotelRoomFormProps {
+  hotelId: string;
+}
+export const HotelRoomForm = ({ hotelId }: HotelRoomFormProps) => {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   // 1. Define your form.
   const form = useForm<z.infer<typeof CreatHotelRoomSchema>>({
     resolver: zodResolver(CreatHotelRoomSchema),
@@ -43,9 +50,17 @@ export const HotelRoomForm = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof CreatHotelRoomSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    startTransition(() => {
+      CreateHotelRoomAction(values, hotelId).then((data) => {
+        if (data?.success) {
+          toast.success(data.success);
+          router.push("/");
+        }
+        {
+          data?.error && toast.error(data.error);
+        }
+      });
+    });
   }
   return (
     <div className="container mx-auto px-6">
@@ -219,7 +234,14 @@ export const HotelRoomForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          {isPending ? (
+            <Button disabled>
+              Creating...
+              <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+            </Button>
+          ) : (
+            <Button type="submit">Submit</Button>
+          )}
         </form>
       </Form>
     </div>

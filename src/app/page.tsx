@@ -7,6 +7,9 @@ export default async function Home() {
       hotelImage: true,
     },
   });
+  if (!data) {
+    return null;
+  }
   return (
     <main className="container mx-auto px-6">
       <HotelCard data={data} />

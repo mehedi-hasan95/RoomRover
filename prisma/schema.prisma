@@ -73,6 +73,7 @@ model Hotel {
   id           String       @id @default(cuid())
   title        String
   desc         String       @db.Text
+  shortDesc    String
   country      String
   state        String
   city         String?

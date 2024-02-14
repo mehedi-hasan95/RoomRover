@@ -69,7 +69,7 @@ export const Settings = () => {
   }
 
   return (
-    <Card className="w-[600px]">
+    <Card className="w-[600px] container mx-auto px-6">
       <CardHeader className="text-center">
         <CardTitle>⛭ Settings</CardTitle>
         <CardDescription>Update your information</CardDescription>
