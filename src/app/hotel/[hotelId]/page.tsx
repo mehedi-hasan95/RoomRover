@@ -1,4 +1,3 @@
-import { GetSingleHotelAction } from "@/actions/user/hotel-related-action";
 import { ImageCarousel } from "@/components/common/image-carousel";
 import { Separator } from "@/components/ui/separator";
 import { useLocation } from "@/hooks/use-location";
@@ -13,8 +12,16 @@ import {
   Utensils,
 } from "lucide-react";
 import { RoomCard } from "../_components/room-card";
+import { Suspense } from "react";
+import NotFound from "@/app/not-found";
+import { RoomSkeleton } from "../_components/room-skeleton";
 
 const SingleHotel = async ({ params }: { params: { hotelId: string } }) => {
+  // Get previous date
+  const today = new Date();
+  let previousDate = new Date(today);
+  previousDate.setDate(today.getDate() - 1);
+  // Get previous date
   const { getCountryByCode, getStateByCode } = useLocation();
   const data = await prismaDb.hotel.findUnique({
     where: {
@@ -22,15 +29,18 @@ const SingleHotel = async ({ params }: { params: { hotelId: string } }) => {
     },
     include: {
       hotelImage: true,
-      room: {
-        include: {
-          roomImage: true,
-        },
-      },
+    },
+  });
+  const room = prismaDb.room.findMany({
+    where: {
+      hotelId: params.hotelId,
+    },
+    include: {
+      roomImage: true,
     },
   });
   if (!data) {
-    return <p>Not found</p>;
+    return <NotFound />;
   }
 
   return (
@@ -127,7 +137,9 @@ const SingleHotel = async ({ params }: { params: { hotelId: string } }) => {
       <Separator className="my-5" />
       <div>
         <h2 className="md:text-xl font-bold pb-4">Where you&apos;ll sleep</h2>
-        <RoomCard data={data?.room} />
+        <Suspense fallback={<RoomSkeleton />}>
+          <RoomCard data={room} />
+        </Suspense>
       </div>
     </div>
   );

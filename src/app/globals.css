@@ -79,7 +79,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
-.commonCss {
-  @apply flex h-full flex-col items-center justify-center;
-}

@@ -5,7 +5,7 @@ const DashboardPage = async () => {
   const user = await CurrentUser();
   const role = await CurrentUserRole();
   return (
-    <div className="commonCss">
+    <div>
       <p>{user?.name}</p>
       <p>
         <UserInfo />

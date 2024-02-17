@@ -18,10 +18,10 @@ import {
   Wifi,
 } from "lucide-react";
 import { DatePickerWithRange } from "./date-picker";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { DateRange } from "react-day-picker";
-import { Room, RoomImage } from "@prisma/client";
-import { differenceInDays } from "date-fns";
+import { Booking, Room, RoomImage } from "@prisma/client";
+import { differenceInDays, eachDayOfInterval } from "date-fns";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { useCurrentUser } from "@/hooks/use-current-user";
@@ -96,6 +96,7 @@ export const RoomStatus = ({ item }: RoomStatusProps) => {
       toast.error("Please pick reserve date");
     }
   };
+
   return (
     <>
       <CardHeader className="group pb-2">
