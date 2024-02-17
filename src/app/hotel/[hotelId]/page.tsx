@@ -127,7 +127,7 @@ const SingleHotel = async ({ params }: { params: { hotelId: string } }) => {
       <Separator className="my-5" />
       <div>
         <h2 className="md:text-xl font-bold pb-4">Where you&apos;ll sleep</h2>
-        <RoomCard data={data?.room as any} />
+        <RoomCard data={data?.room} />
       </div>
     </div>
   );

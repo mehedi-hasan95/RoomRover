@@ -14,7 +14,6 @@ const CreateHotel = async ({ params }: { params: { hotelId: string } }) => {
       room: true,
     },
   });
-  console.log(data);
   return (
     <div>
       <CreateHotelForm initialData={data} />

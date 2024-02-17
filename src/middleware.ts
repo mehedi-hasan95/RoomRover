@@ -4,7 +4,7 @@ const { auth } = NextAuth(authConfig);
 
 import {
   publicRoutes,
-  apiUploadthingPrefix,
+  apiPaymentPrefix,
   authRoutes,
   apiAuthPrefix,
   DEFAULT_LOGIN_REDIRECT,
@@ -15,8 +15,7 @@ export default auth((req) => {
   const isLogIn = !!req.auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isApiUploadthingRoute =
-    nextUrl.pathname.startsWith(apiUploadthingPrefix);
+  const isApiPaymentRoute = nextUrl.pathname.startsWith(apiPaymentPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
@@ -25,7 +24,7 @@ export default auth((req) => {
     return null;
   }
   //   User allow to login or register API access
-  if (isApiUploadthingRoute) {
+  if (isApiPaymentRoute) {
     return null;
   }
 

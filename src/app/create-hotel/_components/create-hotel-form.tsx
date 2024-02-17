@@ -39,7 +39,6 @@ interface CreateHotelFormProps {
   initialData: (Hotel & { hotelImage: HotelImage[]; room: Room[] }) | null;
 }
 export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
-  console.log(initialData);
   const id = initialData?.id;
   const router = useRouter();
   const [isPending, startTransition] = useTransition();

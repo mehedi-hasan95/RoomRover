@@ -91,7 +91,6 @@ model Hotel {
   updatedAt    DateTime     @updatedAt
   hotelImage   HotelImage[]
   room         Room[]
-  booking      Booking[]
   wishList     WishList[]
 
   @@index([userId])
@@ -149,20 +148,16 @@ model Booking {
   user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   roomId            String
   room              Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  hotelId           String
-  hotel             Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   startDate         DateTime
   endDate           DateTime
   breackfastInclude Boolean  @default(false)
-  price             Int
+  totalPrice        Int
   paymentStatus     Boolean  @default(false)
-  paymentIntendedId String   @unique
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
   @@index([userId])
   @@index([roomId])
-  @@index([hotelId])
 }
 
 model WishList {
