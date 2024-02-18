@@ -2,13 +2,19 @@ import { CurrentUser } from "@/lib/current-user";
 import { prismaDb } from "@/lib/prismaDb";
 import { stripe } from "@/lib/stripe";
 import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
 
 export async function POST(req: NextRequest) {
   try {
     const currentUser = await CurrentUser();
-    const { roomId, startDate, endDate, breackfastInclude, totalPrice, title } =
-      await req.json();
+    const {
+      roomId,
+      startDate,
+      endDate,
+      breackfastInclude,
+      totalPrice,
+      title,
+      hotelId,
+    } = await req.json();
 
     const order = await prismaDb.booking.create({
       data: {
@@ -18,6 +24,7 @@ export async function POST(req: NextRequest) {
         startDate,
         totalPrice,
         breackfastInclude,
+        hotelId,
       },
     });
 

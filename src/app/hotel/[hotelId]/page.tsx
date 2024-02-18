@@ -138,7 +138,7 @@ const SingleHotel = async ({ params }: { params: { hotelId: string } }) => {
       <div>
         <h2 className="md:text-xl font-bold pb-4">Where you&apos;ll sleep</h2>
         <Suspense fallback={<RoomSkeleton />}>
-          <RoomCard data={room} />
+          <RoomCard data={room} hotelId={data.id} />
         </Suspense>
       </div>
     </div>

@@ -29,8 +29,9 @@ import { toast } from "sonner";
 
 interface RoomStatusProps {
   item: Room & { roomImage: RoomImage[] };
+  hotelId: string;
 }
-export const RoomStatus = ({ item }: RoomStatusProps) => {
+export const RoomStatus = ({ item, hotelId }: RoomStatusProps) => {
   const currentUser = useCurrentUser();
   const [date, setDate] = useState<DateRange | undefined>();
   const [bookingDate, setBookingDate] = useState(1);
@@ -70,6 +71,7 @@ export const RoomStatus = ({ item }: RoomStatusProps) => {
         endDate: date.to,
         breackfastInclude: includeBreckfast,
         totalPrice: totalPrice,
+        hotelId,
       };
 
       // Data sent
@@ -170,7 +172,7 @@ export const RoomStatus = ({ item }: RoomStatusProps) => {
                   htmlFor="breckfast"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
-                  Breckfast price {item.breckfastPrice}
+                  Breckfast price {item.breckfastPrice}/day
                 </label>
               </div>{" "}
             </div>

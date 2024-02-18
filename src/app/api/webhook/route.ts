@@ -39,6 +39,7 @@ export async function POST(req: NextRequest) {
         },
         data: {
           paymentStatus: true,
+          paymentId: session?.payment_intent as string,
         },
       });
     }
