@@ -92,6 +92,9 @@ export const RoomStatus = ({ item, hotelId, bookings }: RoomStatusProps) => {
         }
       } catch (error) {
         console.error("Error:", error);
+        toast.error(
+          "Please select either another room or dates. Probably your selected room is already booked"
+        );
       } finally {
         setIsLoading(false);
       }
