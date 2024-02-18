@@ -30,8 +30,9 @@ import { toast } from "sonner";
 interface RoomStatusProps {
   item: Room & { roomImage: RoomImage[] };
   hotelId: string;
+  bookings: Booking[] | null;
 }
-export const RoomStatus = ({ item, hotelId }: RoomStatusProps) => {
+export const RoomStatus = ({ item, hotelId, bookings }: RoomStatusProps) => {
   const currentUser = useCurrentUser();
   const [date, setDate] = useState<DateRange | undefined>();
   const [bookingDate, setBookingDate] = useState(1);
@@ -98,6 +99,23 @@ export const RoomStatus = ({ item, hotelId }: RoomStatusProps) => {
       toast.error("Please pick reserve date");
     }
   };
+
+  // Booking data
+
+  const disabledDates = useMemo(() => {
+    let dates: Date[] = [];
+    const roomBooking = bookings?.filter(
+      (reserved) => reserved.roomId === item.id
+    );
+    roomBooking?.forEach((itm) => {
+      const range = eachDayOfInterval({
+        start: new Date(itm.startDate),
+        end: new Date(itm.endDate),
+      });
+      dates = [...dates, ...range];
+    });
+    return dates;
+  }, [bookings, item.id]);
 
   return (
     <>
@@ -182,7 +200,12 @@ export const RoomStatus = ({ item, hotelId }: RoomStatusProps) => {
           <p>
             Total Price {totalPrice} for {bookingDate} days
           </p>
-          <DatePickerWithRange date={date} setDate={setDate} id={item.id} />
+          <DatePickerWithRange
+            date={date}
+            setDate={setDate}
+            id={item.id}
+            disabledDates={disabledDates}
+          />
         </div>
         <div className="py-5">
           {isLoading ? (
