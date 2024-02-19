@@ -8,6 +8,7 @@ import {
   authRoutes,
   apiAuthPrefix,
   DEFAULT_LOGIN_REDIRECT,
+  hotelRoutes,
 } from "@/routes";
 
 export default auth((req) => {
@@ -15,12 +16,18 @@ export default auth((req) => {
   const isLogIn = !!req.auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+  const isHotelRoute = nextUrl.pathname.startsWith(hotelRoutes);
   const isApiPaymentRoute = nextUrl.pathname.startsWith(apiPaymentPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
   //   User allow to login or register API access
   if (isApiAuthRoute) {
+    return null;
+  }
+
+  // Hotel and single hotel page
+  if (isHotelRoute) {
     return null;
   }
   //   User allow to login or register API access

@@ -26,6 +26,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { toast } from "sonner";
+import { LoginButton } from "@/components/auth/login-button";
 
 interface RoomStatusProps {
   item: Room & { roomImage: RoomImage[] };
@@ -211,12 +212,20 @@ export const RoomStatus = ({ item, hotelId, bookings }: RoomStatusProps) => {
           />
         </div>
         <div className="py-5">
-          {isLoading ? (
-            <Button disabled>
-              Loading... <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-            </Button>
+          {currentUser ? (
+            <>
+              {isLoading ? (
+                <Button disabled>
+                  Loading... <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                </Button>
+              ) : (
+                <Button onClick={() => handleReserve()}>Reserve Room</Button>
+              )}
+            </>
           ) : (
-            <Button onClick={() => handleReserve()}>Reserve Room</Button>
+            <LoginButton>
+              <Button>Reserve</Button>
+            </LoginButton>
           )}
         </div>
       </CardFooter>

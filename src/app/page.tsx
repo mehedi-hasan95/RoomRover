@@ -6,6 +6,9 @@ export default async function Home() {
     include: {
       hotelImage: true,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
   if (!data) {
     return null;

@@ -3,7 +3,15 @@
  * These routes do not require authentication
  * @type {string[]}
  */
-export const publicRoutes = ["/", "/verification", "/new-password"];
+export const publicRoutes = ["/", "/verification", "/new-password", "/search"];
+
+/**
+ * A page of routes that are accessible to the public
+ * These routes do not require authentication
+ * @type {string[]}
+ */
+
+export const hotelRoutes = "/hotel";
 
 /**
  * An array of routes that are used for authentication

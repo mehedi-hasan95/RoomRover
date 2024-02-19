@@ -35,6 +35,9 @@ const SingleHotel = async ({ params }: { params: { hotelId: string } }) => {
     where: {
       hotelId: params.hotelId,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
     include: {
       roomImage: true,
     },
