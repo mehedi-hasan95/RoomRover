@@ -68,6 +68,7 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
       parking: initialData?.parking || undefined,
       cctv: initialData?.cctv || undefined,
       gym: initialData?.gym || undefined,
+      price: initialData?.price || "",
       hotelImage: initialData?.hotelImage || [],
     },
   });
@@ -119,7 +120,7 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
     });
   }
 
-  // Delete User
+  // Delete Hotel
   const handleDelete = (id: string) => {
     startTransition(() => {
       DeleteHotelAction(id).then((data) => {
@@ -209,9 +210,13 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
               )}
             />
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-              <CountryComboboxForm form={form} />
-              <StateComboboxForm form={form} data={state} />
-              <CityComboboxForm form={form} data={city} />
+              <CountryComboboxForm disabled={isPending} form={form} />
+              <StateComboboxForm
+                disabled={isPending}
+                form={form}
+                data={state}
+              />
+              <CityComboboxForm disabled={isPending} form={form} data={city} />
 
               {/* Todo filter */}
             </div>
@@ -223,6 +228,7 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
                   <FormLabel>About Hotel Location</FormLabel>
                   <FormControl>
                     <Textarea
+                      disabled={isPending}
                       placeholder="Tell us a little bit about hotel location"
                       className="resize-none"
                       {...field}
@@ -276,7 +282,23 @@ export const CreateHotelForm = ({ initialData }: CreateHotelFormProps) => {
                 label={"Has gym?"}
               />
             </div>
-
+            <FormField
+              control={form.control}
+              name="price"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Select Price range</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={isPending}
+                      placeholder="Price range"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             {/* Cloudinary  */}
             <FormField
               control={form.control}

@@ -25,9 +25,14 @@ import { CheckIcon, ChevronsUpDownIcon } from "lucide-react";
 interface CityComboboxFormProps {
   form: any;
   data: any;
+  disabled?: boolean;
 }
 
-export function CityComboboxForm({ form, data }: CityComboboxFormProps) {
+export function CityComboboxForm({
+  form,
+  data,
+  disabled,
+}: CityComboboxFormProps) {
   return (
     <FormField
       control={form.control}
@@ -61,7 +66,7 @@ export function CityComboboxForm({ form, data }: CityComboboxFormProps) {
                 <CommandGroup>
                   {data?.map((item: any) => (
                     <CommandItem
-                      // disabled={data?.length < 1}
+                      disabled={disabled}
                       value={item.name}
                       key={item.name}
                       onSelect={() => {

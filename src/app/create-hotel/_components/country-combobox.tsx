@@ -26,9 +26,13 @@ import { useEffect, useState } from "react";
 
 interface CountryComboboxFormProps {
   form: any;
+  disabled?: boolean;
 }
 
-export function CountryComboboxForm({ form }: CountryComboboxFormProps) {
+export function CountryComboboxForm({
+  form,
+  disabled,
+}: CountryComboboxFormProps) {
   const [countries, setCountries] = useState<any[]>([]);
   const { getAllCountry } = useLocation();
 
@@ -70,6 +74,7 @@ export function CountryComboboxForm({ form }: CountryComboboxFormProps) {
                 <CommandGroup>
                   {countries.map((item) => (
                     <CommandItem
+                      disabled={disabled}
                       value={item.name}
                       key={item.isoCode}
                       onSelect={() => {

@@ -73,7 +73,7 @@ export const HotelRoomForm = ({ hotelId }: HotelRoomFormProps) => {
               <FormItem>
                 <FormLabel>Room Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="title" {...field} />
+                  <Input disabled={isPending} placeholder="title" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -87,6 +87,7 @@ export const HotelRoomForm = ({ hotelId }: HotelRoomFormProps) => {
                 <FormLabel>Room Desc</FormLabel>
                 <FormControl>
                   <Textarea
+                    disabled={isPending}
                     placeholder="Tell us a little bit about Room"
                     className="resize-none"
                     {...field}
@@ -105,6 +106,7 @@ export const HotelRoomForm = ({ hotelId }: HotelRoomFormProps) => {
                   <FormLabel>King Bed</FormLabel>
                   <FormControl>
                     <Input
+                      disabled={isPending}
                       type="number"
                       min={0}
                       placeholder="Number of King Bed"
@@ -123,6 +125,7 @@ export const HotelRoomForm = ({ hotelId }: HotelRoomFormProps) => {
                   <FormLabel>Queen Bed</FormLabel>
                   <FormControl>
                     <Input
+                      disabled={isPending}
                       type="number"
                       min={0}
                       placeholder="Number of Queen Bed"
@@ -180,6 +183,7 @@ export const HotelRoomForm = ({ hotelId }: HotelRoomFormProps) => {
                     <FormLabel>Breckfast Price</FormLabel>
                     <FormControl>
                       <Input
+                        disabled={isPending}
                         type="number"
                         min={0}
                         placeholder="5.00"
@@ -199,6 +203,7 @@ export const HotelRoomForm = ({ hotelId }: HotelRoomFormProps) => {
                   <FormLabel>Price</FormLabel>
                   <FormControl>
                     <Input
+                      disabled={isPending}
                       type="number"
                       min={0}
                       placeholder="10.00"

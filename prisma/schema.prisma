@@ -86,6 +86,7 @@ model Hotel {
   parking      Boolean      @default(false)
   cctv         Boolean      @default(false)
   gym          Boolean      @default(false)
+  price        String
   userId       String
   user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt    DateTime     @default(now())

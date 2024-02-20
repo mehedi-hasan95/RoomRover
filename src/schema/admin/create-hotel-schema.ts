@@ -15,6 +15,7 @@ export const CreateHotelSchema = z.object({
   parking: z.boolean().optional(),
   cctv: z.boolean().optional(),
   gym: z.boolean().optional(),
+  price: z.string(),
   hotelImage: z.object({ url: z.string() }).array(),
 });
 

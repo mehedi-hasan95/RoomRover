@@ -1,9 +1,11 @@
+import { Separator } from "../ui/separator";
 import Logo from "./logo";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className="divide-y dark:bg-gray-800 dark:text-gray-100 w-full">
+    <footer className="divide-y dark:bg-gray-800 dark:text-gray-100 w-full mt-5">
+      <Separator />
       <div className="container flex flex-col justify-between py-10 mx-auto space-y-8 lg:flex-row lg:space-y-0">
         <div className="lg:w-1/3">
           <Logo />

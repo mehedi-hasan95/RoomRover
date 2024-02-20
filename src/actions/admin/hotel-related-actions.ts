@@ -34,6 +34,7 @@ export const CreateHotelAction = async (
       parking,
       cctv,
       gym,
+      price,
       hotelImage,
     } = validateField.data;
 
@@ -53,6 +54,7 @@ export const CreateHotelAction = async (
         parking,
         cctv,
         gym,
+        price,
         userId: currentUser?.id as string,
         hotelImage: {
           createMany: {
@@ -99,6 +101,7 @@ export const UpdateHotelAction = async (
       parking,
       cctv,
       gym,
+      price,
       hotelImage,
     } = validateField.data;
     // Delete selected image
@@ -133,6 +136,7 @@ export const UpdateHotelAction = async (
         parking,
         cctv,
         gym,
+        price,
         userId: currentUser?.id as string,
         hotelImage: {
           createMany: {

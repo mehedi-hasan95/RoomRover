@@ -5,6 +5,7 @@ import Link from "next/link";
 interface SearchPageProps {
   searchParams: {
     title: string;
+    country: string;
   };
 }
 

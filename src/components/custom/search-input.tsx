@@ -3,7 +3,7 @@
 import qs from "query-string";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/hooks/use-debounce";
@@ -13,13 +13,15 @@ export const SearchInput = () => {
   const debouncedValue = useDebounce(value);
 
   const router = useRouter();
-  //   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentCategoryId = searchParams.get("country");
 
   useEffect(() => {
     const url = qs.stringifyUrl(
       {
         url: "/search",
         query: {
+          country: currentCategoryId,
           title: debouncedValue,
         },
       },
@@ -29,7 +31,7 @@ export const SearchInput = () => {
     if (value.length) {
       router.push(url);
     }
-  }, [debouncedValue, router, value.length]);
+  }, [debouncedValue, currentCategoryId, router, value.length]);
 
   return (
     <div className="relative">
@@ -37,7 +39,7 @@ export const SearchInput = () => {
       <Input
         onChange={(e) => setValue(e.target.value)}
         value={value}
-        className="w-full md:w-[300px] pl-9 rounded-full bg-slate-100 focus-visible:ring-slate-200"
+        className="w-full md:w-[300px] pl-9 rounded-full bg-slate-100 dark:bg-slate-700  focus-visible:ring-slate-200"
         placeholder="Search for a Hotel"
       />
     </div>

@@ -35,7 +35,7 @@ export const HotelCard: React.FC<HotelCardProps> = ({ data }) => {
             <p className="line-clamp-3">{item.desc}</p>
           </CardContent>
           <CardFooter>
-            <p>Price: 100</p>
+            <p>Price: ${item.price}</p>
           </CardFooter>
         </Card>
       ))}
