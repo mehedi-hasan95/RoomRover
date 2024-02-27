@@ -61,7 +61,7 @@ export function LocationSearch() {
         >
           {value
             ? countrys.find((item) => item.isoCode === value)?.name
-            : "Select Country..."}
+            : "Search Country..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>

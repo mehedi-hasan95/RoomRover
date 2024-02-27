@@ -11,10 +11,10 @@ import { LocationSearch } from "@/app/search/_components/location-search";
 export const NavMenu = () => {
   const currentUser = useCurrentUser();
   return (
-    <div className="container mx-auto px-6 flex justify-between items-center py-6">
+    <div className="container mx-auto p-6 flex flex-col md:flex-row justify-center md:justify-between items-center gap-4">
       <Logo />
       {/* {isSearchPage && <SearchInput />} */}
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-col md:flex-row items-center">
         <SearchInput />
         <LocationSearch />
       </div>
