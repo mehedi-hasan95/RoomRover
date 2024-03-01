@@ -194,15 +194,15 @@ export const RoomStatus = ({ item, hotelId, bookings }: RoomStatusProps) => {
                   htmlFor="breckfast"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
-                  Breckfast price {item.breckfastPrice}/day
+                  Breckfast price ${item.breckfastPrice}/day
                 </label>
               </div>{" "}
             </div>
           )}
         </div>
         <div>
-          <p>
-            Total Price {totalPrice} for {bookingDate} days
+          <p className="font-bold py-3">
+            Total Price: ${totalPrice} for {bookingDate} days
           </p>
           <DatePickerWithRange
             date={date}
@@ -223,7 +223,7 @@ export const RoomStatus = ({ item, hotelId, bookings }: RoomStatusProps) => {
               )}
             </>
           ) : (
-            <LoginButton>
+            <LoginButton asChild mode="modal">
               <Button>Reserve</Button>
             </LoginButton>
           )}

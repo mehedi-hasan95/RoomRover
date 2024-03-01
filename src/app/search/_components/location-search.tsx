@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+// import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -21,10 +21,11 @@ import { useLocation } from "@/hooks/use-location";
 import { useDebounce } from "@/hooks/use-debounce";
 import qs from "query-string";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export function LocationSearch() {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
 
   const { getAllCountry } = useLocation();
   const countrys = getAllCountry();
@@ -34,12 +35,12 @@ export function LocationSearch() {
   const searchParams = useSearchParams();
   const currentCategoryId = searchParams.get("title");
 
-  React.useEffect(() => {
+  useEffect(() => {
     const url = qs.stringifyUrl(
       {
         url: "/search",
         query: {
-          title: currentCategoryId,
+          ...(value.length ? { title: currentCategoryId } : {}),
           country: debouncedValue,
         },
       },
